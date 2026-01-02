@@ -12,9 +12,7 @@ interface GoogleButtonProps {
 
 export function GoogleButton({ className, callbackUrl = "/feed" }: GoogleButtonProps) {
   const handleGoogleSignIn = async () => {
-    const siteUrl = process.env.NEXT_PUBLIC_VERCEL_URL || process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
-    const redirectTo = `${siteUrl}/auth/callback?next=${encodeURIComponent(callbackUrl)}`;
-    await signInWithGoogle(redirectTo);
+    await signInWithGoogle(callbackUrl);
   };
 
   return (
