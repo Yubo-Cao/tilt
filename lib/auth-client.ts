@@ -48,30 +48,12 @@ export async function signInWithGoogle(next?: string) {
   return { data, error };
 }
 
-export async function signInWithEmail(email: string, password: string) {
+export async function signInWithIdToken(idToken: string, nonce?: string) {
   const supabase = getSupabaseBrowserClient();
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-  return { data, error };
-}
-
-export async function signUpWithEmail(
-  email: string,
-  password: string,
-  name: string
-) {
-  const supabase = getSupabaseBrowserClient();
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        name,
-        role: "user",
-      },
-    },
+  const { data, error } = await supabase.auth.signInWithIdToken({
+    provider: "google",
+    token: idToken,
+    nonce,
   });
   return { data, error };
 }
