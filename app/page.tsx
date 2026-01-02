@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Zap, Trophy, Share2 } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Share2 } from "lucide-react";
 import Link from "next/link";
 import { AnimatedLogo, AnimatedText } from "@/components/ui/animated-text";
 import { FloatingParticles } from "@/components/ui/floating-particles";
@@ -20,11 +20,11 @@ const features = [
     title: "Instant Feedback",
     description: "Reveal answers instantly with full LaTeX math rendering support.",
   },
-  {
-    icon: Trophy,
-    title: "Leaderboard",
-    description: "Compete with friends. Track daily stats and maintain your streak.",
-  },
+  // {
+  //   icon: Trophy,
+  //   title: "Leaderboard",
+  //   description: "Compete with friends. Track daily stats and maintain your streak.",
+  // },
   {
     icon: Share2,
     title: "Social Sharing",
@@ -149,7 +149,7 @@ export default function Home() {
           transition={{ delay: 1.5 }}
           className="mt-24 text-center text-sm text-foreground-secondary/60"
         >
-          <p>© 2024 Tilt. All rights reserved.</p>
+          <p>© 2026 Tilt. All rights reserved.</p>
         </motion.footer>
       </main>
     </div>
