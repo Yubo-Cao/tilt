@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
 import { signInWithEmail } from "@/lib/auth-client";
@@ -12,14 +12,17 @@ import { useRouter } from "next/navigation";
 
 interface LoginFormProps {
   callbackUrl?: string;
-}
+} 
 
 export function LoginForm({ callbackUrl = "/feed" }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+  const [baseUrl, setBaseUrl] = useState("");
+  useEffect(() => {
+    setBaseUrl(window.location.origin);
+  }, []);
   const [error, setError] = useState("");
   const router = useRouter();
 
