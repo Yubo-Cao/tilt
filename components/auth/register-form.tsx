@@ -86,7 +86,7 @@ export function RegisterForm({ callbackUrl = "/feed" }: RegisterFormProps) {
         animate={{ opacity: 1, y: 0 }}
         className="space-y-6"
       >
-        <GoogleButton redirectTo={`${window.location.origin}/auth/callback?next=${callbackUrl}`} />
+        <GoogleButton callbackUrl={callbackUrl} />
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">

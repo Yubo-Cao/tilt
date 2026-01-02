@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
 import { signInWithEmail } from "@/lib/auth-client";
@@ -12,17 +12,13 @@ import { useRouter } from "next/navigation";
 
 interface LoginFormProps {
   callbackUrl?: string;
-} 
+}
 
 export function LoginForm({ callbackUrl = "/feed" }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [baseUrl, setBaseUrl] = useState("");
-  useEffect(() => {
-    setBaseUrl(window.location.origin);
-  }, []);
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -53,7 +49,7 @@ export function LoginForm({ callbackUrl = "/feed" }: LoginFormProps) {
         animate={{ opacity: 1, y: 0 }}
         className="space-y-6"
       >
-        <GoogleButton redirectTo={`${baseUrl}/auth/callback?next=${callbackUrl}`} />
+        <GoogleButton callbackUrl={callbackUrl} />
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">

@@ -7,11 +7,13 @@ import Image from "next/image";
 
 interface GoogleButtonProps {
   className?: string;
-  redirectTo?: string;
+  callbackUrl?: string;
 }
 
-export function GoogleButton({ className, redirectTo }: GoogleButtonProps) {
+export function GoogleButton({ className, callbackUrl = "/feed" }: GoogleButtonProps) {
   const handleGoogleSignIn = async () => {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+    const redirectTo = `${siteUrl}/auth/callback?next=${encodeURIComponent(callbackUrl)}`;
     await signInWithGoogle(redirectTo);
   };
 
