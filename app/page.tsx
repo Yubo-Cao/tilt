@@ -7,6 +7,7 @@ import { AnimatedLogo, AnimatedText } from "@/components/ui/animated-text";
 import { FloatingParticles } from "@/components/ui/floating-particles";
 import { GridPattern } from "@/components/ui/grid-pattern";
 import { GlowCard } from "@/components/ui/glow-card";
+import { GoogleOneTap } from "@/components/auth/google-one-tap";
 import { cn } from "@/lib/utils";
 
 const features = [
@@ -35,6 +36,9 @@ const features = [
 export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-background via-background to-primary-950/20">
+      {/* Google One Tap - shows popup automatically if user is logged into Google */}
+      <GoogleOneTap showButton={false} callbackUrl="/feed" />
+      
       {/* Background Effects */}
       <GridPattern className="opacity-50" />
       <FloatingParticles count={40} />

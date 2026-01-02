@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { InfiniteScroll } from "@/components/feed/infinite-scroll";
 import { ShareModal } from "@/components/share/share-modal";
+import { LogoutButton } from "@/components/auth/logout-button";
 import type { ProblemWithInteraction } from "@/lib/problems";
 import { Loader2 } from "lucide-react";
 
@@ -11,9 +12,12 @@ interface FeedClientProps {
 }
 
 export function FeedClient({ userId }: FeedClientProps) {
-  const [initialProblems, setInitialProblems] = useState<ProblemWithInteraction[] | null>(null);
+  const [initialProblems, setInitialProblems] = useState<
+    ProblemWithInteraction[] | null
+  >(null);
   const [shareModalOpen, setShareModalOpen] = useState(false);
-  const [selectedProblem, setSelectedProblem] = useState<ProblemWithInteraction | null>(null);
+  const [selectedProblem, setSelectedProblem] =
+    useState<ProblemWithInteraction | null>(null);
   const [seenIds, setSeenIds] = useState<string[]>([]);
 
   // Fetch initial problems
@@ -37,42 +41,53 @@ export function FeedClient({ userId }: FeedClientProps) {
     fetchProblems();
   }, []);
 
-  const handleLoadMore = useCallback(async (currentSeenIds: string[]): Promise<ProblemWithInteraction[]> => {
-    try {
-      const response = await fetch(`/api/problems?limit=3&exclude=${currentSeenIds.join(",")}`);
-      if (response.ok) {
-        const data = await response.json();
-        return data.problems || [];
+  const handleLoadMore = useCallback(
+    async (currentSeenIds: string[]): Promise<ProblemWithInteraction[]> => {
+      try {
+        const response = await fetch(
+          `/api/problems?limit=3&exclude=${currentSeenIds.join(",")}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          return data.problems || [];
+        }
+      } catch (error) {
+        console.error("Error loading more problems:", error);
       }
-    } catch (error) {
-      console.error("Error loading more problems:", error);
-    }
-    return [];
-  }, []);
+      return [];
+    },
+    []
+  );
 
-  const handleReaction = useCallback(async (interactionId: string, reaction: "like" | "dislike" | null) => {
-    try {
-      await fetch("/api/problems/reaction", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ interactionId, reaction }),
-      });
-    } catch (error) {
-      console.error("Error recording reaction:", error);
-    }
-  }, []);
+  const handleReaction = useCallback(
+    async (interactionId: string, reaction: "like" | "dislike" | null) => {
+      try {
+        await fetch("/api/problems/reaction", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ interactionId, reaction }),
+        });
+      } catch (error) {
+        console.error("Error recording reaction:", error);
+      }
+    },
+    []
+  );
 
-  const handleToggleSolved = useCallback(async (interactionId: string, solved: boolean) => {
-    try {
-      await fetch("/api/problems/solved", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ interactionId, solved }),
-      });
-    } catch (error) {
-      console.error("Error toggling solved:", error);
-    }
-  }, []);
+  const handleToggleSolved = useCallback(
+    async (interactionId: string, solved: boolean) => {
+      try {
+        await fetch("/api/problems/solved", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ interactionId, solved }),
+        });
+      } catch (error) {
+        console.error("Error toggling solved:", error);
+      }
+    },
+    []
+  );
 
   const handleShare = useCallback((problem: ProblemWithInteraction) => {
     setSelectedProblem(problem);
@@ -89,6 +104,10 @@ export function FeedClient({ userId }: FeedClientProps) {
 
   return (
     <>
+      <div className="fixed top-4 right-4 lg:right-7 z-50">
+        <LogoutButton />
+      </div>
+
       <InfiniteScroll
         initialProblems={initialProblems}
         userId={userId}
